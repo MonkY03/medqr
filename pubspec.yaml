@@ -1,0 +1,29 @@
+name: med_qr
+description: "A Flutter project for the med_qr app."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  email_validator: ^2.0.1
+  cupertino_icons: ^1.0.6
+  shared_preferences: ^2.0.13
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  # Activa la carpeta de imágenes en assets
+  assets:
+    - assets/images/  # Aquí es donde pondrás tus imágenes, como el logo para el Splash Screen
+
