@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,6 +18,27 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // Centra la cuadrícula verticalmente
             children: [
+              FutureBuilder<String?>(
+                future: _cargarNombre(), // Carga el nombre guardado
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator(); // Muestra un cargador mientras se carga el nombre
+                  } else if (snapshot.hasError) {
+                    return const Text('Error al cargar el nombre'); // Manejo de errores
+                  } else {
+                    final nombre = snapshot.data ?? 'Usuario'; // Nombre por defecto si no se encuentra
+                    return Text(
+                      'Hola, $nombre!', // Saludo con el nombre
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 40), // Espacio entre el saludo y la cuadrícula
               GridView.count(
                 shrinkWrap: true, // Evita que ocupe más espacio del necesario
                 crossAxisCount: 2, // 2 columnas en la cuadrícula
@@ -68,6 +90,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  // Método que carga el nombre del usuario desde SharedPreferences
+  Future<String?> _cargarNombre() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? nombre = prefs.getString('nombre_usuario');
+    debugPrint('Nombre cargado: $nombre'); // Usa debugPrint para mostrar el nombre cargado
+    return nombre; // Devuelve el nombre guardado
+  }
+
   // Método que crea un botón personalizado
   Widget _buildCustomButton(BuildContext context, String text, IconData icon, Color color, VoidCallback onPressed) {
     return ElevatedButton(
@@ -96,3 +126,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+

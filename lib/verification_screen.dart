@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'register_screen.dart'; // Importar la pantalla de registro
+import 'registro_datos.dart'; // Importar la pantalla de registro de datos
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -61,14 +61,22 @@ class VerificationScreenState extends State<VerificationScreen> {
 
   // Validar el código ingresado
   void _validateCode() {
+    String testCode = "12345"; // Código de prueba predeterminado
+
     setState(() {
-      _isCodeValid = _codeController.text == "MAR05"; // Validar el código ingresado
+      _isCodeValid = _codeController.text == testCode || _codeController.text == "MAR05"; // Validar el código ingresado
     });
+
     if (_isCodeValid) {
+      // Mostrar mensaje de validación correcta
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Código aceptado. Validación correcta.')),
+      );
+
       // Navegar a la siguiente pantalla si el código es correcto
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const NextScreen()),
+        MaterialPageRoute(builder: (context) => const RegistroDatosScreen()), // Navegar a la pantalla de registro de datos
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -199,32 +207,13 @@ class VerificationScreenState extends State<VerificationScreen> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const RegisterScreen()), // Redirigir a register_screen.dart
-                  );
+                  Navigator.pop(context); // Volver a la pantalla anterior
                 },
                 child: const Text('Volver', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class NextScreen extends StatelessWidget {
-  const NextScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Siguiente Pantalla'),
-      ),
-      body: const Center(
-        child: Text('Aquí puedes ingresar los datos de la persona.'),
       ),
     );
   }

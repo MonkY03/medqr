@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'verification_screen.dart'; // Importa la nueva pantalla de verificación
+import 'login_screen.dart'; // Importa la pantalla de inicio de sesión
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -221,7 +222,10 @@ class RegisterScreenState extends State<RegisterScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop(); // Regresa a la pantalla anterior
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginScreen()), // Navegar a la pantalla de inicio de sesión
+                        );
                       },
                       child: const Text('Cancelar'),
                     ),

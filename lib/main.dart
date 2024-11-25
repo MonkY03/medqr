@@ -1,7 +1,7 @@
-import 'verification_screen.dart'; // Asegúrate de importar la pantalla de verificación
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'login_screen.dart'; // Importa la pantalla de login
+ 
 void main() {
   runApp(const MyApp());
 }
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'medQR',
-      home: SplashScreen(), // Usa const para la SplashScreen
+      home: SplashScreen(), // Inicia con SplashScreen
     );
   }
 }
@@ -31,9 +31,9 @@ class SplashScreenState extends State<SplashScreen> {
     super.initState();
     // Simula una carga de 5 segundos
     Timer(const Duration(seconds: 5), () {
-      // Navega a la siguiente pantalla de verificación
+      // Navega a la pantalla de login después de la SplashScreen
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const VerificationScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()), // Redirige a la pantalla de login
       );
     });
   }
